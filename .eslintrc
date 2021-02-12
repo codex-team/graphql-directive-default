@@ -4,5 +4,8 @@
   },
   "extends": [
     "codex/ts"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/no-magic-numbers": "off"
+  }
 }
