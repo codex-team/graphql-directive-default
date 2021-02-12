@@ -1,22 +1,60 @@
-# typescript-lib-template
+# GraphQL @default directive
+
 A quick start template for a new TypeScript library
 
-[![NPM version](https://img.shields.io/npm/v/@codexteam/typescript-lib-template?style=flat-square)](https://www.npmjs.com/package/@codexteam/typescript-lib-template)
-[![License](https://img.shields.io/npm/l/@codexteam/typescript-lib-template?style=flat-square)](https://www.npmjs.com/package/@codexteam/typescript-lib-template)
+[![NPM version](https://img.shields.io/npm/v/@codexteam/graphql-directive-default?style=flat-square)](https://www.npmjs.com/package/@codexteam/graphql-directive-default)
+[![License](https://img.shields.io/npm/l/@codexteam/graphql-directive-default?style=flat-square)](https://www.npmjs.com/package/@codexteam/graphql-directive-default)
+
+## Installation
+
+```shell
+npm i @codexteam/graphql-directive-default
+
+# OR via yarn
+
+yarn add @codexteam/graphql-directive-default
+```
 
 ## How to use
-1. Click [here](https://github.com/codex-team/typescript-lib-template/generate) and fill setting for new repository
-2. Change package name in `package.json` and other fields if necessary
-3. Change NPM package scope from [workflow file](./.github/workflows/main.yml) or remove it
-4. Fill `NPM_TOKEN` and `CODEX_BOT_WEBHOOK` secrets in your repository or organization settings
-5. Start writing your new library!
 
-## Features
+1. Import lib
 
-- TypeScript support
-- ESlint support with [eslint-config-codex](http://github.com/codex-team/eslint-config/)
-- Unit testing with [Jest](http://jestjs.io)
-- GitHub Actions configuration for test/lint/build/publish purposes
+```ts
+import createDirectiveDefault from '@codexteam/graphql-directive-default';
+```
+
+2. Add directive to `schemaTransforms`
+
+```ts
+const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+    schemaTransforms: [
+        createDirectiveDefault().schemaTransformer,
+    ],
+});
+```
+
+3. Add directive definitions to GraphQL types
+
+```graphql
+directive @default(value: String!) on FIELD_DEFINITION
+```
+
+4. Now you can add directive to your field definition
+
+```graphql
+type Query {
+    valueString: String! @default(value: "default value") # will return "default value"
+    valueBoolean: Boolean! @default(value: "true") # will return true
+    valueInt: Int! @default(value: "0") # will return 0
+    valueArray: [String]! @default(value: "[]") # will return empty array
+}
+```
+
+## Contributing Guide
+
+Feel free to open new issues and submit Pull Requests
 
 ## About team
 
