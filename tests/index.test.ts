@@ -154,4 +154,32 @@ describe('@default directive', () => {
     expect(data?.valueInt).toBe('123');
     expect(data?.valueBoolean).toBe('true');
   });
+
+  test('Should work with arrays', async () => {
+    const schema = makeExecutableSchema({
+      typeDefs: [directiveDeclaration, `
+        type Query {
+          arrayField: [String]! @default(value: "[]")
+        }
+      `],
+      resolvers: {
+        Query: {
+          arrayField: () => null,
+        },
+      },
+      schemaTransforms,
+    });
+
+    const { data, errors } = await graphql(
+      schema,
+      `
+        query {
+          arrayField
+        }
+      `
+    );
+
+    expect(errors).toBeUndefined();
+    expect(data?.arrayField).toStrictEqual([]);
+  });
 });
