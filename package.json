@@ -1,10 +1,10 @@
 {
-  "name": "@codexteam/typescript-lib-template",
-  "version": "1.0.4",
-  "description": "A quick start template for a new TypeScript library",
+  "name": "@codexteam/graphql-directive-default",
+  "version": "0.0.1",
+  "description": "GraphQL directive for applying default values to nullable fields",
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "repository": "https://github.com/codex-team/typescript-lib-template.git",
+  "repository": "https://github.com/codex-team/graphql-directive-default.git",
   "author": "CodeX Team <all@codex.so>",
   "license": "MIT",
   "scripts": {
