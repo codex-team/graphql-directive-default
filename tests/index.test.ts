@@ -2,26 +2,26 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import createDirectiveDefault from '../src';
 import { graphql } from 'graphql';
 
+const { schemaTransformer, typeDefs: directiveDeclaration } = createDirectiveDefault();
+
+const schemaTransforms = [ schemaTransformer ];
+
 describe('@default directive', () => {
   test('Should return default value if parent value is null or undefined', async () => {
     const schema = makeExecutableSchema({
-      typeDefs: `
-        directive @default(value: String!) on FIELD_DEFINITION
-
+      typeDefs: [directiveDeclaration, `
         type Query {
           nullValue: String! @default(value: "default value for null")
           undefinedValue: String! @default(value: "default value for undefined")
         }
-      `,
+      `],
       resolvers: {
         Query: {
           nullValue: () => null,
           undefinedValue: () => null,
         },
       },
-      schemaTransforms: [
-        createDirectiveDefault().schemaTransformer,
-      ],
+      schemaTransforms,
     });
 
     const { data, errors } = await graphql(
@@ -41,21 +41,17 @@ describe('@default directive', () => {
 
   test('Shouldn\'t return default value if value is defined', async () => {
     const schema = makeExecutableSchema({
-      typeDefs: `
-        directive @default(value: String!) on FIELD_DEFINITION
-
+      typeDefs: [directiveDeclaration, `
         type Query {
           value: String! @default(value: "default value")
         }
-      `,
+      `],
       resolvers: {
         Query: {
           value: () => 'val',
         },
       },
-      schemaTransforms: [
-        createDirectiveDefault().schemaTransformer,
-      ],
+      schemaTransforms,
     });
 
     const { data, errors } = await graphql(
@@ -73,21 +69,17 @@ describe('@default directive', () => {
 
   test('Should return boolean default value', async () => {
     const schema = makeExecutableSchema({
-      typeDefs: `
-        directive @default(value: String!) on FIELD_DEFINITION
-
+      typeDefs: [directiveDeclaration, `
         type Query {
           value: Boolean! @default(value: "true")
         }
-      `,
+      `],
       resolvers: {
         Query: {
           value: () => null,
         },
       },
-      schemaTransforms: [
-        createDirectiveDefault().schemaTransformer,
-      ],
+      schemaTransforms,
     });
 
     const { data, errors } = await graphql(
@@ -105,21 +97,17 @@ describe('@default directive', () => {
 
   test('Should return number default value', async () => {
     const schema = makeExecutableSchema({
-      typeDefs: `
-        directive @default(value: String!) on FIELD_DEFINITION
-
+      typeDefs: [directiveDeclaration, `
         type Query {
           value: Int! @default(value: "123")
         }
-      `,
+      `],
       resolvers: {
         Query: {
           value: () => null,
         },
       },
-      schemaTransforms: [
-        createDirectiveDefault().schemaTransformer,
-      ],
+      schemaTransforms,
     });
 
     const { data, errors } = await graphql(
@@ -137,23 +125,19 @@ describe('@default directive', () => {
 
   test('Should return string default value even is provided default value parses as boolean or number', async () => {
     const schema = makeExecutableSchema({
-      typeDefs: `
-        directive @default(value: String!) on FIELD_DEFINITION
-
+      typeDefs: [directiveDeclaration, `
         type Query {
           valueInt: String! @default(value: "123")
           valueBoolean: String! @default(value: "true")
         }
-      `,
+      `],
       resolvers: {
         Query: {
           valueInt: () => null,
           valueBoolean: () => null,
         },
       },
-      schemaTransforms: [
-        createDirectiveDefault().schemaTransformer,
-      ],
+      schemaTransforms,
     });
 
     const { data, errors } = await graphql(
