@@ -37,7 +37,7 @@ interface DefaultDirectiveArguments {
  */
 export default function createDirectiveDefault(directiveName = 'default'): DirectiveCreateResult {
   return {
-    typeDefs: `directive @${directiveName}() on FIELD_DEFINITION`,
+    typeDefs: `directive @${directiveName}(value: String!) on FIELD_DEFINITION`,
     schemaTransformer: (schema: GraphQLSchema) => mapSchema(schema, {
       [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
         const directives = getDirectives(schema, fieldConfig);
