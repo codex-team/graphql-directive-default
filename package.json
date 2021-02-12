@@ -1,6 +1,6 @@
 {
   "name": "@codexteam/graphql-directive-default",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GraphQL directive for applying default values to nullable fields",
   "main": "build/index.js",
   "types": "build/index.d.ts",

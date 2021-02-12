@@ -1,9 +1,18 @@
 # GraphQL @default directive
-
-A quick start template for a new TypeScript library
-
 [![NPM version](https://img.shields.io/npm/v/@codexteam/graphql-directive-default?style=flat-square)](https://www.npmjs.com/package/@codexteam/graphql-directive-default)
 [![License](https://img.shields.io/npm/l/@codexteam/graphql-directive-default?style=flat-square)](https://www.npmjs.com/package/@codexteam/graphql-directive-default)
+
+
+GraphQL directive for applying default values to nullable fields
+```graphql
+type Query {
+    valueString: String! @default(value: "default value") # will return "default value"
+    valueBoolean: Boolean! @default(value: "true") # will return true
+    valueInt: Int! @default(value: "0") # will return 0
+    valueArray: [String]! @default(value: "[]") # will return empty array
+}
+```
+
 
 ## Installation
 
