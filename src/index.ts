@@ -72,7 +72,11 @@ export default function createDirectiveDefault(directiveName = 'default'): Direc
                   parsedDefaultValue = Number(defaultValue);
                   break;
                 default:
-                  parsedDefaultValue = JSON.parse(defaultValue);
+                  try {
+                    parsedDefaultValue = JSON.parse(defaultValue);
+                  } catch {
+                    parsedDefaultValue = defaultValue;
+                  }
               }
 
               return parsedDefaultValue;
