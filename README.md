@@ -10,6 +10,7 @@ type Query {
     valueBoolean: Boolean! @default(value: "true") # will return true
     valueInt: Int! @default(value: "0") # will return 0
     valueArray: [String]! @default(value: "[]") # will return empty array
+    valueObject: [ObjectType]! @default(value: "{}") # will return empty object
 }
 ```
 
@@ -58,6 +59,7 @@ type Query {
     valueBoolean: Boolean! @default(value: "true") # will return true
     valueInt: Int! @default(value: "0") # will return 0
     valueArray: [String]! @default(value: "[]") # will return empty array
+    valueObject: [ObjectType]! @default(value: "{}") # will return empty object
 }
 ```
 
