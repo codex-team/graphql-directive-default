@@ -182,4 +182,72 @@ describe('@default directive', () => {
     expect(errors).toBeUndefined();
     expect(data?.arrayField).toStrictEqual([]);
   });
+
+  test('Should work with object', async () => {
+    const schema = makeExecutableSchema({
+      typeDefs: [directiveDeclaration, `
+        type ObjectType {
+          field: String
+        }
+
+        type Query {
+          objectField: ObjectType! @default(value: "{}")
+        }
+      `],
+      resolvers: {
+        Query: {
+          objectField: () => null,
+        },
+      },
+      schemaTransforms,
+    });
+
+    const { data, errors } = await graphql(
+      schema,
+      `
+        query {
+          objectField {
+            field
+          }
+        }
+      `
+    );
+
+    expect(errors).toBeUndefined();
+    expect(data?.objectField).toEqual({ field: null });
+  });
+
+  test('Should work with object and its fields', async () => {
+    const schema = makeExecutableSchema({
+      typeDefs: [directiveDeclaration, `
+        type ObjectType {
+          field: String @default(value: "string!")
+        }
+
+        type Query {
+          objectField: ObjectType! @default(value: "{}")
+        }
+      `],
+      resolvers: {
+        Query: {
+          objectField: () => null,
+        },
+      },
+      schemaTransforms,
+    });
+
+    const { data, errors } = await graphql(
+      schema,
+      `
+        query {
+          objectField {
+            field
+          }
+        }
+      `
+    );
+
+    expect(errors).toBeUndefined();
+    expect(data?.objectField).toEqual({ field: 'string!' });
+  });
 });
